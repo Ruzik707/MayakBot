@@ -40,3 +40,4 @@ VSEGPT_API_KEY=ваш_ключ_от_vsegpt
 ```bash
 docker compose up --build -d
 ```
+<img width="570" height="634" alt="image" src="https://github.com/user-attachments/assets/026c5546-b32f-4a9c-9a0a-78b266e1d7b4" />
