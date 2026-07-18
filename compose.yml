@@ -1,0 +1,16 @@
+name: mayakbot
+
+services:
+  mentor-bot:
+    build: .
+    env_file:
+      - .env
+    command: python src/bots/MayakMentor.py
+    restart: always
+
+  copywriter-bot:
+    build: .
+    env_file:
+      - .env
+    command: python src/bots/MayakCopywriter.py
+    restart: always
