@@ -1,0 +1,19 @@
+# Секреты
+.env
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+
+# Кэш питона
+__pycache__/
+*.pyc
+
+# Настройки IDE
+.idea/
+.vscode/
+
+# База данных
+data/
+chroma_db_mayakovsky/
