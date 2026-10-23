@@ -8,21 +8,29 @@ from langchain_core.prompts import PromptTemplate
 
 load_dotenv()
 
-embeddings = HuggingFaceEmbeddings(model_name='BAAI/bge-m3')
+api_key = os.getenv("VSEGPT_API_KEY")
+if not api_key:
+    raise RuntimeError("VSEGPT_API_KEY is missing. Copy .env.example to .env and configure the API key.")
 
 persist_directory = str(
     Path(__file__).resolve().parent.parent.parent / 'data' / 'chroma_db_mayakovsky'
 )
+if not Path(persist_directory).exists():
+    raise RuntimeError("RAG index is missing. Run: uv run python -m src.rag.build_index")
+
+embeddings = HuggingFaceEmbeddings(model_name='BAAI/bge-m3')
 vectorstore = Chroma(
     persist_directory=persist_directory,
     embedding_function=embeddings
 )
+if not vectorstore.get(limit=1)["ids"]:
+    raise RuntimeError("RAG index is empty. Run: uv run python -m src.rag.build_index")
 retriever = vectorstore.as_retriever(search_kwargs={'k': 3})
 
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
-    api_key=os.getenv("VSEGPT_API_KEY"),
+    api_key=api_key,
     base_url="https://api.vsegpt.ru/v1",
     temperature=0.7
 )

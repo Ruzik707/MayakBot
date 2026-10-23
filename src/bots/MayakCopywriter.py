@@ -41,7 +41,7 @@ async def handle_user_complaint(message: Message):
     await message.bot.send_chat_action(chat_id=message.chat.id, action='typing')
 
     try:
-        bot_answer = get_mayakovsky_response_copywriter(message.text)
+        bot_answer = await asyncio.to_thread(get_mayakovsky_response_copywriter, message.text)
         await message.answer(bot_answer)
     except Exception as e:
         logger.error(f"Ошибка при генерации ответа: {e}")
